@@ -1,12 +1,16 @@
 <template>
-    <div>{{info}}</div>
+    <div>{{info}}
+        <div>{{address}}</div>
+    </div>
+    
 </template>
 
 <script>
 export default {
     data(){
         return{
-            info:'個人資料'
+            info:'個人資料',
+            address:'台中市'
         }
     }
 }

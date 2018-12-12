@@ -1,16 +1,19 @@
 <template>
+  <transition name="slide-fade">
   <div class="login">
     <div class="loginBlock">
       <h1>{{ msg }}</h1>
       <span class="loginTitle">帳號</span>
-      <input type="text" placeholder="帳號" value="">
-      <div class="loginPsd">密碼</div><div class="forgetPwd">忘記密碼?</div>
-      <input type="password" placeholder="密碼">
-      <router-link to="/Signin"><button class="loginBtn">登入</button></router-link>
+      <input type="text" placeholder="帳號" v-model="account">
+      <div class="loginPsd">密碼</div>
+      <!-- <div class="forgetPwd">忘記密碼?</div> -->
+      <input type="password" placeholder="密碼" v-model="password">
+      <button class="loginBtn" @click="signIn">登入</button>
       <div class="divide"></div>
       <router-link to="/Reg"><button class="signBtn">註冊</button></router-link>
     </div>
   </div>
+  </transition>
 </template>
 
 <script>
@@ -18,11 +21,30 @@ import Reg from './Reg'
 export default {
   data () {
     return {
-      msg: '會員登入'
+      msg: '會員登入',
+      account: '',
+      password:''
     }
   },
   components:{
     Reg
+  },
+  methods:{
+    signIn(){
+      let userInfo = JSON.parse(localStorage.getItem('user'))
+      console.log(userInfo);
+      for(var i=0;i<userInfo.length;i++){
+        if(userInfo[i].account === this.account && userInfo[i].password === this.password){
+          sessionStorage.setItem('userId',JSON.stringify(i))
+          this.$router.push({path:'/Signin'})
+          break
+        }
+      }
+      // 如果迴圈跑完還是沒找到就代表沒這個帳密
+      if(i===userInfo.length){
+        alert('帳號密碼錯誤')
+      }
+    },
   }
 }
 </script>
@@ -117,9 +139,14 @@ span{
       border-radius: 4px;
       cursor: pointer;
       margin-top:40px;
+      &:hover{
+        background-color: #5aabf1;
+        color:rgba(0,0,0,.7);
+      }
     }
     .signBtn{
       margin-top:10px;
+      
     }
     .divide{
       width:100%;
@@ -129,5 +156,33 @@ span{
     }
   }
 }
-
+.slide-fade-enter-active {
+  // transition: all .5s ease;
+  animation: slide-enter 1s;
+}
+.slide-fade-leave-active {
+  transition: all 0s;
+}
+.slide-fade-leave{
+  opacity: 0;
+}
+.slide-fade-enter
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  // transform: rotateY(360deg);
+  opacity: 0;
+}
+@keyframes slide-enter{
+  0% {
+    transform: scale(0.5);
+  }
+  25% {
+    transform: scale(1) rotate(45deg);
+  }
+  50%{
+    transform: scale(1) rotate(-45deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>

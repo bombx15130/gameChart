@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
-import Reg from '@/components/Reg'
-import Signin from '@/components/Signin'
+import chart from '@/components/chart'
+
 
 Vue.use(Router)
 
@@ -10,15 +9,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Login
+      component: chart
     },
-    {
-      path: '/Reg',
-      component: Reg
-    },
-    {
-      path: '/Signin',
-      component: Signin
-    }
   ]
 })

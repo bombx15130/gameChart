@@ -100,7 +100,8 @@ export default {
           
           for(let j=2; j<tds.length;j++){
             if(tds[j].classList.length ===2){
-              locNumArr.push([tds[j].offsetLeft +15,tds[j].offsetTop-table.offsetTop+tds[j].clientHeight/2])
+              // locNumArr.push([tds[j].offsetLeft +15,tds[j].offsetTop-table.offsetTop+tds[j].clientHeight/2])
+              locNumArr.push([tds[j].offsetLeft + tds[j].offsetWidth / 2, tds[j].offsetTop - table.offsetTop + tds[j].clientHeight / 2])
             }
           }
           
